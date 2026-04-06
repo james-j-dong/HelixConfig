@@ -1,11 +1,12 @@
 [[language]]
 name = "python"
-language-servers = ["pyright", "ruff"]
+language-servers = ["ty","pyright"]
 
-[language-server.pyright]
-command = "pyright-langserver"
-args = ["--stdio"]
-
-[language-server.ruff]
-command = "ruff"
+[language-server.ty]
+command = "ty"
 args = ["server"]
+
+[language-server.ty.config]
+inlayHints.callArgumentNames = false
+experimental.rename = true
+experimental.autoImport = true
