@@ -1,6 +1,7 @@
+# Python
 [[language]]
 name = "python"
-language-servers = ["ty","pyright"]
+language-servers = ["ty", "pyright"]
 
 [language-server.ty]
 command = "ty"
@@ -10,3 +11,10 @@ args = ["server"]
 inlayHints.callArgumentNames = false
 experimental.rename = true
 experimental.autoImport = true
+
+# Rust
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+
+[language-server.rust-analyzer.config.cargo]
+features = "all"
