@@ -1,28 +1,39 @@
-# Python
+# ============ Python ============
 [[language]]
 name = "python"
-language-servers = ["ty", "pyright"]
+language-servers = ["basedpyright", "ruff"]
+auto-format = true
+formatter = { command = "ruff", args = ["format", "--stdin-filename", "%{buffer_name}", "-"] }
 
-[language-server.ty]
-command = "ty"
+[language-server.ruff]
+command = "ruff"
 args = ["server"]
 
-[language-server.ty.config]
+# basedpyright over stock pyright: pyright does not advertise inlayHintProvider,
+# so Python would get no inlay hints despite editor.lsp.display-inlay-hints.
+# typeCheckingMode here is a global default -- a project's pyproject.toml wins.
+[language-server.basedpyright.config.basedpyright.analysis]
+typeCheckingMode = "standard"
 inlayHints.callArgumentNames = false
-experimental.rename = true
-experimental.autoImport = true
+inlayHints.variableTypes = true
+inlayHints.functionReturnTypes = true
+inlayHints.genericTypes = true
 
-# Rust
-[language-server.rust-analyzer.config.check]
-command = "clippy"
+# ============ Rust ============
+[language-server.rust-analyzer.config]
+check.command = "clippy"
+cargo.features = "all"
 
-[language-server.rust-analyzer.config.cargo]
-features = "all"
+[language-server.rust-analyzer.config.inlayHints]
+bindingModeHints.enable = true
+chainingHints.enable = true
+closingBraceHints.enable = true
+closureReturnTypeHints.enable = "with_block"
+parameterHints.enable = true
+typeHints.enable = true
 
-# Typescript
 
-# ---------- Language servers ----------
-
+# ============ TypeScript / JavaScript ============
 [language-server.typescript-language-server.config.typescript.inlayHints]
 includeInlayParameterNameHints = "all"
 includeInlayFunctionParameterTypeHints = true
@@ -34,39 +45,51 @@ includeInlayEnumMemberValueHints = true
 [language-server.tailwindcss-ls]
 command = "tailwindcss-language-server"
 args = ["--stdio"]
-config = { userLanguages = { "typescriptreact" = "javascriptreact", "typescript" = "javascript" } }
+config.userLanguages.typescriptreact = "javascriptreact"
+config.userLanguages.typescript = "javascript"
 
 [language-server.vscode-eslint-language-server.config]
-experimental = { useFlatConfig = true }
+experimental.useFlatConfig = true
 format = false
-
-# ---------- Languages ----------
 
 [[language]]
 name = "typescript"
 language-servers = ["typescript-language-server", "vscode-eslint-language-server"]
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "typescript"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }
 
 [[language]]
 name = "tsx"
 language-servers = ["typescript-language-server", "tailwindcss-ls", "vscode-eslint-language-server"]
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "typescript"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }
 
 [[language]]
 name = "javascript"
 language-servers = ["typescript-language-server", "vscode-eslint-language-server"]
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "babel"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+[[language]]
+name = "jsx"
+language-servers = ["typescript-language-server", "tailwindcss-ls", "vscode-eslint-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }
 
 [[language]]
 name = "css"
 language-servers = ["vscode-css-language-server", "tailwindcss-ls"]
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "css"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }
+
+# Explicit language-servers drops superhtml from the default list (not installed).
+[[language]]
+name = "html"
+language-servers = ["vscode-html-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }
 
 [[language]]
 name = "json"
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "json"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "%{buffer_name}"] }

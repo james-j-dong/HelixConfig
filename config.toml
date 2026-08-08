@@ -6,6 +6,7 @@ cursorline = true
 bufferline = "multiple"
 color-modes = true
 completion-replace = true
+end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -28,6 +29,11 @@ right = ["diagnostics", "selections", "register", "position", "file-encoding", "
 [editor.lsp]
 display-messages = true
 display-inlay-hints = true
+
+# Severities: error, warning, info, hint
+[editor.inline-diagnostics]
+cursor-line = "warning"
+other-lines = "error"
 
 [keys.insert.j]
 k = "normal_mode"
