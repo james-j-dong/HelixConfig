@@ -6,11 +6,9 @@ cursorline = true
 bufferline = "multiple"
 color-modes = true
 completion-replace = true
-end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
 insert = "bar"
-normal = "block"
 select = "underline"
 
 [editor.file-picker]
@@ -23,17 +21,14 @@ skip-levels = 1
 
 [editor.statusline]
 left = ["mode", "spinner", "file-name", "version-control", "read-only-indicator", "file-modification-indicator"]
-center = []
 right = ["diagnostics", "selections", "register", "position", "file-encoding", "file-line-ending", "file-type"]
 
 [editor.lsp]
-display-messages = true
 display-inlay-hints = true
 
 # Severities: error, warning, info, hint
 [editor.inline-diagnostics]
 cursor-line = "warning"
-other-lines = "error"
 
 [keys.insert.j]
 k = "normal_mode"
